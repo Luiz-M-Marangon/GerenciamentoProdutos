@@ -3,8 +3,6 @@ package org.example.factory;
 import org.example.model.Produto;
 import org.example.model.produtos.*;
 
-
-
 public class ProdutoFactory {
 
     public static Produto createProduto(String nome, String massa, String etiqueta){
