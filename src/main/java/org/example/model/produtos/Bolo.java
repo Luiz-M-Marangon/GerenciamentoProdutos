@@ -8,5 +8,6 @@ public class Bolo extends Produto{
         nome = "bolo";
         massa = "Massa de bolo";
         etiqueta = "Bolinho gostozinho";
+        preco = 8.0;
     }
 }

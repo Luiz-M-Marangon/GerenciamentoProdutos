@@ -4,6 +4,7 @@ public abstract class Produto {
     public String nome;
     public String massa;
     public String etiqueta;
+    public double preco;
 
 
     public String getNome() {
@@ -29,4 +30,8 @@ public abstract class Produto {
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
     }
+
+    public double getPreco() {return preco;}
+
+    public void setPreco(double preco) {this.preco = preco;}
 }

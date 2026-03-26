@@ -1,13 +1,22 @@
 package org.example.decorator;
 
+import org.example.model.Produto;
+
 public class ItemPedidoBasico implements ItemPedido {
-    @Override
-    public String getDescricao(){
-        return "Produto básico";
+
+    private Produto produto;
+
+    public ItemPedidoBasico(Produto produto) {
+        this.produto = produto;
     }
 
     @Override
-    public double getPreco(){
-        return 1.0;
+    public String getDescricao(){
+        return produto.getNome();
+    }
+
+    @Override
+    public double getPreco(){ //não retorna valor padrão, pois valores se encontram nos itens individuais
+        return produto.getPreco();
     }
 }

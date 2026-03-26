@@ -7,10 +7,13 @@ public class ProdutoFactory {
 
     public static Produto createProduto(String nome, String massa, String etiqueta){
 
-        Produto produto = null;
+        // utilizado para não gerar erro de String
+        nome = nome.trim().toLowerCase();
+
+        Produto produto;
 
         if (nome.equals("bolo")){
-            produto = new Donuts();
+            produto = new Bolo();
         } else if (nome.equals("churros")) {
             produto = new Churros();
         } else if (nome.equals("cookies")) {
@@ -19,7 +22,13 @@ public class ProdutoFactory {
             produto = new Croissant();
         } else if (nome.equals("donuts")) {
             produto = new Donuts();
+        } else {
+            throw new IllegalArgumentException("Produto inválido: " + nome);
         }
+
+        // retorna apenas uma unica vez para todos os produtos, não precisando fazer individualmente
+        produto.setMassa(massa);
+        produto.setEtiqueta(etiqueta);
 
         return produto;
     }

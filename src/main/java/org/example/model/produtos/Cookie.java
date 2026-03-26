@@ -8,5 +8,6 @@ public class Cookie extends Produto {
         nome = "cookie";
         massa = "Massa de cookies";
         etiqueta = "Cookies cheiram gostoso";
+        preco = 3.0;
     }
 }

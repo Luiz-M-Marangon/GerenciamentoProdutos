@@ -8,5 +8,6 @@ public class Churros extends Produto {
         nome = "churros";
         massa = "Massa de churros";
         etiqueta = "Churros bem bacanas";
+        preco = 2.5;
     }
 }

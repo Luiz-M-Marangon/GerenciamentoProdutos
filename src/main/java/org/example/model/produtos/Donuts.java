@@ -8,5 +8,6 @@ public class Donuts extends Produto {
         nome = "donuts";
         massa = "Massa do donuts";
         etiqueta = "Donuts especiais";
+        preco = 4.0;
     }
 }

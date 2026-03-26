@@ -1,17 +1,55 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("teste de commit!"));
+import org.example.decorator.ItemPedido;
+import org.example.decorator.ItemPedidoBasico;
+import org.example.decorator.coberturas.CoberturaNutella;
+import org.example.decorator.sabores.SaborChocolate;
+import org.example.decorator.tamanhos.TamanhoGrande;
+import org.example.factory.ProdutoFactory;
+import org.example.model.Pedido;
+import org.example.model.Produto;
+import org.example.model.Usuario;
+import org.example.observer.ClienteObserver;
+import org.example.pagamento.CartaoCredito;
+import org.example.pagamento.adaptee.CartaoVA;
+import org.example.pagamento.adapter.CartaoVAAdapter;
+import org.example.proxy.ProdutoService;
+import org.example.proxy.ProdutoServiceProxy;
+import org.example.proxy.ProdutoServiceReal;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+public class Main {
+    public static void main(String[] args){
+        // Proxy (controle de acesso)
+        Usuario usuario = new Usuario("João", true);
+        ProdutoService service = new ProdutoServiceProxy(
+                new ProdutoServiceReal(),
+                usuario
+        );
+        service.listarProdutos();
+
+        // Pedido
+        Pedido pedido = new Pedido();
+
+        // Observer
+        pedido.adicionarObserver(new ClienteObserver("João"));
+
+        // Factory
+        Produto produto = ProdutoFactory.createProduto("bolo", "simples", "bolo massa");
+
+        // Decorator
+        ItemPedido item = new ItemPedidoBasico(produto);
+        item = new SaborChocolate(item);
+        item = new CoberturaNutella(item);
+        item = new TamanhoGrande(item); //DEPENDENDO DA POSIÇÃO EM QUE FOR ADICIONADO, O CÁLCULO MUDA RESULTADO FINAL
+
+        // Adiciona ao pedido
+        pedido.adicionarItem(item);
+
+
+        // Adapter (pagamento)
+        pedido.setPagamento(new CartaoVAAdapter(new CartaoVA()));
+
+        // Finaliza
+        pedido.finalizarPedido();
     }
 }
