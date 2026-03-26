@@ -6,6 +6,7 @@ import java.util.List;
 import org.example.decorator.ItemPedido;
 import org.example.observer.Observer;
 import org.example.pagamento.adapter.ProcessoPagamento;
+import org.example.repository.PedidoRepository;
 
 
 //CLASSE USADA PARA LINKAR TODOS AS PONTAS DO SISTEMA EM UM SÓ LOCAL
@@ -80,6 +81,23 @@ public class Pedido {
 
         pagamento.pagar(total);
 
+        new PedidoRepository().salvar(this);
+
         notificarObservers("Pedido finalizado! Total: R$ " + total);
+    }
+
+    //utilizado para formatação da descrição que irá salvar dentro do BD
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (ItemPedido item : itens) {
+            sb.append(item.getDescricao())
+                    .append(" - R$ ")
+                    .append(item.getPreco())
+                    .append("\n");
+        }
+
+        return sb.toString();
     }
 }
