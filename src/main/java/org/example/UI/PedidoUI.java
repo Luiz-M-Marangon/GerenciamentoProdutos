@@ -39,8 +39,11 @@ public class PedidoUI extends JFrame {
 
     private Pedido pedido;
 
-    public PedidoUI() {
-        setTitle("Confeitaria");
+    private String usuario;
+    private String tipo;
+
+    public PedidoUI(String usuario, String tipo) {
+        setTitle("Confeitaria- " + usuario + "(" + tipo + ")");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -67,6 +70,10 @@ public class PedidoUI extends JFrame {
         JButton btnAdicionar = new JButton("Adicionar ao Pedido");
         JButton btnFinalizar = new JButton("Finalizar Pedido");
 
+        btnFinalizar.addActionListener((ActionEvent e) ->{
+            new PagamentoUI(pedido);
+        });
+
         areaPedido = new JTextArea(10, 30);
         areaPedido.setEditable(false);
 
@@ -78,7 +85,7 @@ public class PedidoUI extends JFrame {
         //coberturas
         add(checkNutella);
         add(checkPistache);
-        add(checkMorango);
+        add(checkNinho);
         //tamanhos
         add(checkGrande);
         add(checkMedio);
@@ -141,11 +148,19 @@ public class PedidoUI extends JFrame {
 
             areaPedido.append("\nTOTAL: R$ " + pedido.calcularTotal());
         });
-    }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new PedidoUI().setVisible(true);
+        JButton logout = new JButton("Logout");
+        add(logout);
+
+        logout.addActionListener(e -> {
+            dispose();
+            new LoginUI();
         });
     }
+
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            new PedidoUI().setVisible(true);
+//        });
+//    }
 }
