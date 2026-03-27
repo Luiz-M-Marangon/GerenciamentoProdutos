@@ -3,6 +3,7 @@ package org.example.UI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import org.example.model.Pedido;
+import org.example.observer.PedidoSubject;
 import org.example.pagamento.CartaoCredito;
 import org.example.pagamento.CartaoDebito;
 import org.example.pagamento.adaptee.CartaoVA;
@@ -10,14 +11,17 @@ import org.example.pagamento.adaptee.PayPal;
 import org.example.pagamento.adapter.CartaoVAAdapter;
 import org.example.pagamento.adapter.PayPalAdapter;
 
+
 public class PagamentoUI extends JFrame {
 
     private Pedido pedido;
+    private PedidoSubject pedidoSubject;
 
     private JComboBox<String> formasPagamento;
 
-    public PagamentoUI(Pedido pedido) {
+    public PagamentoUI(Pedido pedido, PedidoSubject pedidoSubject) {
         this.pedido = pedido;
+        this.pedidoSubject = pedidoSubject;
 
         setTitle("Pagamento");
         setSize(300, 150);
@@ -61,6 +65,16 @@ public class PagamentoUI extends JFrame {
         else if (opcao.equals("PayPal")) {
             pedido.setPagamento(new PayPalAdapter(new PayPal()));
         }
+
+        pedidoSubject.setStatus("Pedido em preparo...");
+
+        try { Thread.sleep(1000); } catch (Exception ex) {}
+
+        pedidoSubject.setStatus("Saiu para entrega...");
+
+        try { Thread.sleep(1000); } catch (Exception ex) {}
+
+        pedidoSubject.setStatus("Entrega realizada!");
 
         pedido.finalizarPedido();
 

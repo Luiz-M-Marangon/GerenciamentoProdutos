@@ -4,6 +4,13 @@ import org.example.decorator.ItemPedido;
 import org.example.decorator.PedidoDecorator;
 
 public class TamanhoMedio extends PedidoDecorator {
+
+    private static double preco = 1.3;
+
+    public static void setPreco(double preco) {
+        TamanhoMedio.preco = preco;
+    }
+
     public TamanhoMedio(ItemPedido itempedido){
         super(itempedido);
     }
@@ -15,6 +22,6 @@ public class TamanhoMedio extends PedidoDecorator {
 
     @Override
     public double getPreco(){
-        return itempedido.getPreco() * 1.3;
+        return itempedido.getPreco() * preco;
     }
 }

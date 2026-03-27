@@ -4,8 +4,15 @@ import org.example.decorator.ItemPedido;
 import org.example.decorator.PedidoDecorator;
 
 public class SaborMorango extends PedidoDecorator {
+
+    private static double preco = 2.0;
+
     public SaborMorango(ItemPedido itempedido){
         super(itempedido);
+    }
+
+    public static void setPreco(double preco) {
+        SaborMorango.preco = preco;
     }
 
     @Override
@@ -15,6 +22,6 @@ public class SaborMorango extends PedidoDecorator {
 
     @Override
     public double getPreco(){
-        return itempedido.getPreco() + 2.0;
+        return itempedido.getPreco() + preco;
     }
 }

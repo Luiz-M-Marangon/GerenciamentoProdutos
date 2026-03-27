@@ -14,6 +14,7 @@ import org.example.model.Pedido;
 import org.example.model.Produto;
 import org.example.model.Usuario;
 import org.example.observer.ClienteObserver;
+import org.example.observer.PedidoSubject;
 import org.example.pagamento.adaptee.CartaoVA;
 import org.example.pagamento.adapter.CartaoVAAdapter;
 
@@ -38,8 +39,12 @@ public class PedidoUI extends JFrame {
 
     private JTextArea areaPedido;
 
+    private PedidoSubject pedidoSubject;
+
     private Pedido pedido;
 
+//    private String usuario;
+//    private String tipo;
     private Usuario usuario;
 
     public PedidoUI(Usuario usuario) {
@@ -51,7 +56,6 @@ public class PedidoUI extends JFrame {
         setLayout(new FlowLayout());
 
         pedido = new Pedido();
-        pedido.adicionarObserver(new ClienteObserver("Cliente"));
 
         // Produtos
         comboProduto = new JComboBox<>(new String[]{"bolo", "donuts", "churros", "croissant"});
@@ -72,12 +76,22 @@ public class PedidoUI extends JFrame {
         JButton btnAdicionar = new JButton("Adicionar ao Pedido");
         JButton btnFinalizar = new JButton("Finalizar Pedido");
 
+        if (usuario.isGerente()) {
+            JButton btnAlterarPreco = new JButton("Alterar Preço");
+            add(btnAlterarPreco);
+
+            btnAlterarPreco.addActionListener(e -> alterarPreco());
+        }
+
         btnFinalizar.addActionListener((ActionEvent e) ->{
-            new PagamentoUI(pedido);
+            new PagamentoUI(pedido, pedidoSubject);
         });
 
         areaPedido = new JTextArea(10, 30);
         areaPedido.setEditable(false);
+
+        pedidoSubject = new PedidoSubject(1);
+        pedidoSubject.addObserver(new ClienteObserver("Cliente", areaPedido));
 
         add(comboProduto);
         //sabores
@@ -144,11 +158,10 @@ public class PedidoUI extends JFrame {
         // AÇÃO: finalizar pedido
         btnFinalizar.addActionListener((ActionEvent e) -> {
 
-            pedido.setPagamento(new CartaoVAAdapter(new CartaoVA()));
 
-            pedido.finalizarPedido();
 
-            areaPedido.append("\nTOTAL: R$ " + pedido.calcularTotal());
+            new PagamentoUI(pedido, pedidoSubject);
+
         });
 
         JButton logout = new JButton("Logout");
@@ -160,9 +173,55 @@ public class PedidoUI extends JFrame {
         });
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            new PedidoUI().setVisible(true);
-//        });
-//    }
+    private void alterarPreco() {
+
+        int selecionados = 0;
+
+        if (checkChocolate.isSelected()) selecionados++;
+        if (checkBaunilha.isSelected()) selecionados++;
+        if (checkMorango.isSelected()) selecionados++;
+
+        if (checkNutella.isSelected()) selecionados++;
+        if (checkNinho.isSelected()) selecionados++;
+        if (checkPistache.isSelected()) selecionados++;
+
+        if (checkMedio.isSelected()) selecionados++;
+        if (checkGrande.isSelected()) selecionados++;
+
+        if (selecionados == 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um item!");
+            return;
+        }
+
+        if (selecionados > 1) {
+            JOptionPane.showMessageDialog(this, "Selecione apenas UM item!");
+            return;
+        }
+
+        String novoPrecoStr = JOptionPane.showInputDialog("Novo preço:");
+
+        try {
+            double novoPreco = Double.parseDouble(novoPrecoStr);
+
+            // SABORES
+            if (checkChocolate.isSelected()) SaborChocolate.setPreco(novoPreco);
+            if (checkBaunilha.isSelected()) SaborBaunilha.setPreco(novoPreco);
+            if (checkMorango.isSelected()) SaborMorango.setPreco(novoPreco);
+
+            // COBERTURAS
+            if (checkNutella.isSelected()) CoberturaNutella.setPreco(novoPreco);
+            if (checkNinho.isSelected()) CoberturaNinho.setPreco(novoPreco);
+            if (checkPistache.isSelected()) CoberturaPistache.setPreco(novoPreco);
+
+            // TAMANHOS
+            if (checkMedio.isSelected()) TamanhoMedio.setPreco(novoPreco);
+            if (checkGrande.isSelected()) TamanhoGrande.setPreco(novoPreco);
+
+            JOptionPane.showMessageDialog(this, "Preço atualizado!");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Valor inválido!");
+        }
+    }
+
 }

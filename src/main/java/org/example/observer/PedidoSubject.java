@@ -28,9 +28,7 @@ public class PedidoSubject implements Subject {
     }
 
     @Override
-    public void removeObserver(Observer o){
-        observers.add(o);
-    }
+    public void removeObserver(Observer o){observers.remove(o);}
 
     @Override
     public void notifyObservers(){

@@ -4,6 +4,13 @@ import org.example.decorator.ItemPedido;
 import org.example.decorator.PedidoDecorator;
 
 public class CoberturaPistache extends PedidoDecorator {
+
+    private static double preco = 8.0;
+
+    public static void setPreco(double preco) {
+        CoberturaPistache.preco = preco;
+    }
+
     public CoberturaPistache(ItemPedido itempedido){
         super(itempedido);
     }
@@ -15,6 +22,6 @@ public class CoberturaPistache extends PedidoDecorator {
 
     @Override
     public double getPreco(){
-        return itempedido.getPreco() + 4;
+        return itempedido.getPreco() + preco;
     }
 }
