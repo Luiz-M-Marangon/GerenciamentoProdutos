@@ -17,7 +17,7 @@ public class CoberturaNutella extends PedidoDecorator {
 
     @Override
     public String getDescricao(){
-        return itempedido.getDescricao() + "Cobertura nutella";
+        return itempedido.getDescricao() + "Cobertura nutella\n";
     }
 
     @Override

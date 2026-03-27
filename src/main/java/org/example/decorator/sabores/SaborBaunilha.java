@@ -17,7 +17,7 @@ public class SaborBaunilha extends PedidoDecorator {
 
     @Override
     public String getDescricao(){
-        return itempedido.getDescricao() + "Sabor baunilha";
+        return itempedido.getDescricao() + "Sabor baunilha\n";
     }
 
     @Override

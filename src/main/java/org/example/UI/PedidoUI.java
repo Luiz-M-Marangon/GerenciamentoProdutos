@@ -51,7 +51,7 @@ public class PedidoUI extends JFrame {
         this.usuario = usuario;
 
         setTitle("Confeitaria- " + usuario.getNome() + (usuario.isGerente() ? "(Gerente)" : "(Funcionario)"));
-        setSize(400, 400);
+        setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
@@ -87,7 +87,7 @@ public class PedidoUI extends JFrame {
             new PagamentoUI(pedido, pedidoSubject);
         });
 
-        areaPedido = new JTextArea(10, 30);
+        areaPedido = new JTextArea(20, 50);
         areaPedido.setEditable(false);
 
         pedidoSubject = new PedidoSubject(1);
@@ -157,11 +157,7 @@ public class PedidoUI extends JFrame {
 
         // AÇÃO: finalizar pedido
         btnFinalizar.addActionListener((ActionEvent e) -> {
-
-
-
             new PagamentoUI(pedido, pedidoSubject);
-
         });
 
         JButton logout = new JButton("Logout");

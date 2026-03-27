@@ -5,7 +5,7 @@ import org.example.model.Produto;
 public class Donuts extends Produto {
 
     public Donuts(){
-        nome = "donuts";
+        nome = "Donuts\n";
         massa = "Massa do donuts";
         etiqueta = "Donuts especiais";
         preco = 4.0;

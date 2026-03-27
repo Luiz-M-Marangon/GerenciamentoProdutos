@@ -17,7 +17,7 @@ public class SaborMorango extends PedidoDecorator {
 
     @Override
     public String getDescricao(){
-        return itempedido.getDescricao() + "Sabor morango";
+        return itempedido.getDescricao() + "Sabor morango\n";
     }
 
     @Override

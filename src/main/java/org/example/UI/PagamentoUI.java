@@ -66,7 +66,7 @@ public class PagamentoUI extends JFrame {
             pedido.setPagamento(new PayPalAdapter(new PayPal()));
         }
 
-        pedidoSubject.setStatus("Pedido em preparo...");
+        pedidoSubject.setStatus("\nPedido em preparo...");
 
         try { Thread.sleep(1000); } catch (Exception ex) {}
 
