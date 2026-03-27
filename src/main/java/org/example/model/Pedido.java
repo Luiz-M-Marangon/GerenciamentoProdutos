@@ -21,9 +21,8 @@ public class Pedido {
         this.observers = new ArrayList<>();
     }
 
-    // -------------------------
+
     // ITENS DO PEDIDO
-    // -------------------------
     public void adicionarItem(ItemPedido item) {
         itens.add(item);
     }
@@ -36,18 +35,16 @@ public class Pedido {
         return itens;
     }
 
-    // -------------------------
+
     // CÁLCULO TOTAL
-    // -------------------------
     public double calcularTotal() {
         return itens.stream()
                 .mapToDouble(ItemPedido::getPreco)
                 .sum();
     }
 
-    // -------------------------
+
     // OBSERVER (notificações)
-    // -------------------------
     public void adicionarObserver(Observer observer) {
         observers.add(observer);
     }
@@ -62,16 +59,14 @@ public class Pedido {
         }
     }
 
-    // -------------------------
+
     // PAGAMENTO (Adapter)
-    // -------------------------
     public void setPagamento(ProcessoPagamento pagamento) {
         this.pagamento = pagamento;
     }
 
-    // -------------------------
+
     // FINALIZAÇÃO DO PEDIDO
-    // -------------------------
     public void finalizarPedido() {
         double total = calcularTotal();
 

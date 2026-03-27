@@ -13,6 +13,7 @@ import org.example.factory.ProdutoFactory;
 import org.example.model.Pedido;
 import org.example.model.Produto;
 import org.example.observer.ClienteObserver;
+import org.example.observer.PedidoSubject;
 import org.example.pagamento.adaptee.CartaoVA;
 import org.example.pagamento.adapter.CartaoVAAdapter;
 
@@ -37,10 +38,12 @@ public class PedidoUI extends JFrame {
 
     private JTextArea areaPedido;
 
+    private PedidoSubject pedidoSubject;
+
     private Pedido pedido;
 
-    private String usuario;
-    private String tipo;
+//    private String usuario;
+//    private String tipo;
 
     public PedidoUI(String usuario, String tipo) {
         setTitle("Confeitaria- " + usuario + "(" + tipo + ")");
@@ -49,7 +52,6 @@ public class PedidoUI extends JFrame {
         setLayout(new FlowLayout());
 
         pedido = new Pedido();
-        pedido.adicionarObserver(new ClienteObserver("Cliente"));
 
         // Produtos
         comboProduto = new JComboBox<>(new String[]{"bolo", "donuts", "churros", "croissant"});
@@ -71,11 +73,14 @@ public class PedidoUI extends JFrame {
         JButton btnFinalizar = new JButton("Finalizar Pedido");
 
         btnFinalizar.addActionListener((ActionEvent e) ->{
-            new PagamentoUI(pedido);
+            new PagamentoUI(pedido, pedidoSubject);
         });
 
         areaPedido = new JTextArea(10, 30);
         areaPedido.setEditable(false);
+
+        pedidoSubject = new PedidoSubject(1);
+        pedidoSubject.addObserver(new ClienteObserver("Cliente", areaPedido));
 
         add(comboProduto);
         //sabores
@@ -142,11 +147,22 @@ public class PedidoUI extends JFrame {
         // AÇÃO: finalizar pedido
         btnFinalizar.addActionListener((ActionEvent e) -> {
 
-            pedido.setPagamento(new CartaoVAAdapter(new CartaoVA()));
+//            pedido.setPagamento(new CartaoVAAdapter(new CartaoVA()));
+//
+//            areaPedido.append("\nTOTAL: R$ " + pedido.calcularTotal());
 
-            pedido.finalizarPedido();
-
-            areaPedido.append("\nTOTAL: R$ " + pedido.calcularTotal());
+            new PagamentoUI(pedido, pedidoSubject);
+//            pedidoSubject.setStatus("Pedido em preparo...");
+//
+//            try { Thread.sleep(1000); } catch (Exception ex) {}
+//
+//            pedidoSubject.setStatus("Saiu para entrega...");
+//
+//            try { Thread.sleep(1000); } catch (Exception ex) {}
+//
+//            pedidoSubject.setStatus("Entrega realizada!");
+//
+//            pedido.finalizarPedido();
         });
 
         JButton logout = new JButton("Logout");
@@ -158,9 +174,4 @@ public class PedidoUI extends JFrame {
         });
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            new PedidoUI().setVisible(true);
-//        });
-//    }
 }
