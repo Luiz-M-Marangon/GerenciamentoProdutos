@@ -1,12 +1,18 @@
 package org.example.UI;
 
+import org.example.model.Usuario;
+
 import javax.swing.*;
 
 public class LoginUI extends JFrame {
 
     private JTextField campoUsuario;
     private JPasswordField campoSenha;
-    private JComboBox<String> tipoUsuario;
+
+    private Usuario[] usuarios = {
+            new Usuario("joao", false),
+            new Usuario("maria", true)
+    };
 
     public LoginUI() {
         setTitle("Login");
@@ -30,10 +36,6 @@ public class LoginUI extends JFrame {
         campoSenha.setBounds(100, 60, 150, 25);
         add(campoSenha);
 
-        tipoUsuario = new JComboBox<>(new String[]{"Funcionário", "Gerente"});
-        tipoUsuario.setBounds(100, 90, 150, 25);
-        add(tipoUsuario);
-
         JButton botaoLogin = new JButton("Login");
         botaoLogin.setBounds(100, 120, 100, 25);
         add(botaoLogin);
@@ -44,19 +46,20 @@ public class LoginUI extends JFrame {
     }
 
     private void fazerLogin() {
-        String usuario = campoUsuario.getText();
+        String usuarioDigitado = campoUsuario.getText();
 
-        // Validação simples
-        if (usuario.equals("joao") || usuario.equals("maria")) {
-            JOptionPane.showMessageDialog(this, "Login OK!");
+        for (Usuario u : usuarios) {
+            if (u.getNome().equals(usuarioDigitado)) {
 
+                JOptionPane.showMessageDialog(this, "Login OK!");
 
-            dispose(); // fecha login
+                dispose();
 
-            new PedidoUI(usuario, tipoUsuario.getSelectedItem().toString()).setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuário inválido!");
+                new PedidoUI(u).setVisible(true);
+                return;
+            }
         }
+
+        JOptionPane.showMessageDialog(this, "Usuário inválido!");
     }
 }

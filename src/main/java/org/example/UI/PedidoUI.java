@@ -12,6 +12,7 @@ import org.example.decorator.tamanhos.TamanhoMedio;
 import org.example.factory.ProdutoFactory;
 import org.example.model.Pedido;
 import org.example.model.Produto;
+import org.example.model.Usuario;
 import org.example.observer.ClienteObserver;
 import org.example.pagamento.adaptee.CartaoVA;
 import org.example.pagamento.adapter.CartaoVAAdapter;
@@ -39,11 +40,12 @@ public class PedidoUI extends JFrame {
 
     private Pedido pedido;
 
-    private String usuario;
-    private String tipo;
+    private Usuario usuario;
 
-    public PedidoUI(String usuario, String tipo) {
-        setTitle("Confeitaria- " + usuario + "(" + tipo + ")");
+    public PedidoUI(Usuario usuario) {
+        this.usuario = usuario;
+
+        setTitle("Confeitaria- " + usuario.getNome() + (usuario.isGerente() ? "(Gerente)" : "(Funcionario)"));
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());

@@ -10,6 +10,10 @@ public class Usuario {
         this.gerente = gerente;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public boolean isGerente(){
         return gerente;
     }
