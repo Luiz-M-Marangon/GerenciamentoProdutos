@@ -15,8 +15,6 @@ import org.example.model.Produto;
 import org.example.model.Usuario;
 import org.example.observer.ClienteObserver;
 import org.example.observer.PedidoSubject;
-import org.example.pagamento.adaptee.CartaoVA;
-import org.example.pagamento.adapter.CartaoVAAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,8 +41,6 @@ public class PedidoUI extends JFrame {
 
     private Pedido pedido;
 
-//    private String usuario;
-//    private String tipo;
     private Usuario usuario;
 
     public PedidoUI(Usuario usuario) {
@@ -114,7 +110,7 @@ public class PedidoUI extends JFrame {
 
             String nome = (String) comboProduto.getSelectedItem();
 
-            Produto produto = ProdutoFactory.createProduto(nome, "simples", "padrão");
+            Produto produto = ProdutoFactory.createProduto(nome, "Massa", "padrão");
 
             ItemPedido item = new ItemPedidoBasico(produto);
 
@@ -169,6 +165,7 @@ public class PedidoUI extends JFrame {
         });
     }
 
+    // função para alterar preço se usuário for gerente
     private void alterarPreco() {
 
         int selecionados = 0;
@@ -199,17 +196,17 @@ public class PedidoUI extends JFrame {
         try {
             double novoPreco = Double.parseDouble(novoPrecoStr);
 
-            // SABORES
+            //sabires
             if (checkChocolate.isSelected()) SaborChocolate.setPreco(novoPreco);
             if (checkBaunilha.isSelected()) SaborBaunilha.setPreco(novoPreco);
             if (checkMorango.isSelected()) SaborMorango.setPreco(novoPreco);
 
-            // COBERTURAS
+            //coberturas
             if (checkNutella.isSelected()) CoberturaNutella.setPreco(novoPreco);
             if (checkNinho.isSelected()) CoberturaNinho.setPreco(novoPreco);
             if (checkPistache.isSelected()) CoberturaPistache.setPreco(novoPreco);
 
-            // TAMANHOS
+            //tamanhos
             if (checkMedio.isSelected()) TamanhoMedio.setPreco(novoPreco);
             if (checkGrande.isSelected()) TamanhoGrande.setPreco(novoPreco);
 

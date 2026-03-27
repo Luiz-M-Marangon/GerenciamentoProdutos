@@ -5,7 +5,7 @@ import org.example.decorator.PedidoDecorator;
 
 public class CoberturaNinho extends PedidoDecorator {
 
-    public static double preco = 3.5;
+    public static double preco = 3.5; //utilizado para alteração de preço posteriormente por usuãrio gerente
 
     public static void setPreco(double preco) {
         CoberturaNinho.preco = preco;
